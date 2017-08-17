@@ -24,7 +24,7 @@ def run_bot(r, comments_replied_to):
 			print("Chuck Norris found!")
 
 			comment_reply = requests.get('http://api.icndb.com/jokes/random').json()['value']['joke']
-			#comment.reply(comment_reply)
+			comment.reply(comment_reply)
 			print("Replied to comment " + comment.id)
 
 			comments_replied_to.append(comment.id)

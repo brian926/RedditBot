@@ -1,15 +1,15 @@
 import praw
-import config
 import time
 import os
 import requests
+import yaml
 
 def bot_login():
+	config = yaml.safe_load(open("config.yml"))
 	"""The login info for the bot which is stored in r."""
-	r = praw.Reddit(username = config.username,
-		password = config.password,
-		client_id = config.client_id,
-		client_secret = config.client_secret,
+	r = praw.Reddit(username = config['username'],
+		client_id = config['client_id'],
+		client_secret = config['client_secret'],
 		user_agent = "Comment responder")
 	print("Logged in!")
 
@@ -20,17 +20,19 @@ def run_bot(r, comments_replied_to):
 	print("Obtaining 25 comments...")
 
 	for comment in r.subreddit('test').comments(limit=25):
-		if "Chuck Norris" in comment.body and comment.id not in comments_replied_to and comment.author != r.user.me():
-			print("Chuck Norris found!")
+		print(comment.body)
+		#if "Chuck Norris" in comment.body and comment.id not in comments_replied_to and comment.author != r.user.me():
+		#	print("Chuck Norris found!")
+		#
+		#	comment_reply = requests.get('http://api.icndb.com/jokes/random').json()['value']['joke']
+		#	comment.reply(comment_reply)
+		#	print("Replied to comment " + comment.id)
 
-			comment_reply = requests.get('http://api.icndb.com/jokes/random').json()['value']['joke']
-			#comment.reply(comment_reply)
-			print("Replied to comment " + comment.id)
+		#	comments_replied_to.append(comment.id)
+		
 
-			#comments_replied_to.append(comment.id)
-
-			with open("comments_replied_to.txt", "a") as f:
-				f.write(comment.id + "\n")
+		with open("comments_replied_to.txt", "a") as f:
+			f.write(comment.id + "\n")
 
 	print("Sleeping for 10 seconds...")
 	time.sleep(10)

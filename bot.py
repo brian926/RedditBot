@@ -3,6 +3,7 @@ import time
 import os
 import requests
 import yaml
+import openSummary
 
 def bot_login():
 	config = yaml.safe_load(open("config.yml"))
@@ -18,21 +19,22 @@ def bot_login():
 def run_bot(r, comments_replied_to):
 	"""The bot searches thru 25 comments and if matched, replies."""
 	print("Obtaining 25 comments...")
+	
+	subreddit = r.subreddit('news')
 
-	for comment in r.subreddit('test').comments(limit=25):
-		print(comment.body)
-		#if "Chuck Norris" in comment.body and comment.id not in comments_replied_to and comment.author != r.user.me():
-		#	print("Chuck Norris found!")
-		#
-		#	comment_reply = requests.get('http://api.icndb.com/jokes/random').json()['value']['joke']
-		#	comment.reply(comment_reply)
-		#	print("Replied to comment " + comment.id)
+	for submission in subreddit.hot(limit=25):
+		if submission.id not in comments_replied_to:
+			print(submission.title)
+			#news_ai = openSummary.index(submission.title)
+			#print(news_ai)
+			print(submission.url)
+			print('\n')
 
-		#	comments_replied_to.append(comment.id)
+			comments_replied_to.append(submission.id)
 		
 
 		with open("comments_replied_to.txt", "a") as f:
-			f.write(comment.id + "\n")
+			f.write(submission.id + "\n")
 
 	print("Sleeping for 10 seconds...")
 	time.sleep(10)
@@ -40,7 +42,6 @@ def run_bot(r, comments_replied_to):
 	run_time += 1
 
 def get_saved_comments():
-	"""Creates a file with comments id replied to inside"""
 	if not os.path.isfile("comments_replied_to.txt"):
 		comments_replied_to = []
 	else:

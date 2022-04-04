@@ -4,6 +4,9 @@ import os
 import requests
 import yaml
 import openSummary
+from flask import Flask, redirect, render_template, request, url_for
+
+app = Flask(__name__)
 
 def bot_login():
 	config = yaml.safe_load(open("config.yml"))
@@ -17,19 +20,20 @@ def bot_login():
 	return r
 
 def run_bot(r, comments_replied_to):
-	"""The bot searches thru 25 comments and if matched, replies."""
 	print("Obtaining 25 comments...")
 	
 	subreddit = r.subreddit('news')
+	news_list = []
 
 	for submission in subreddit.hot(limit=25):
 		if submission.id not in comments_replied_to:
-			print(submission.title)
+			#print(submission.title)
 			#news_ai = openSummary.index(submission.title)
 			#print(news_ai)
-			print(submission.url)
-			print('\n')
+			#print(submission.url)
+			#print('\n')
 
+			news_list.append(submission.title)
 			comments_replied_to.append(submission.id)
 		
 
@@ -37,9 +41,8 @@ def run_bot(r, comments_replied_to):
 			f.write(submission.id + "\n")
 
 	print("Sleeping for 10 seconds...")
-	time.sleep(10)
-	global run_time 
-	run_time += 1
+
+	return news_list
 
 def get_saved_comments():
 	if not os.path.isfile("comments_replied_to.txt"):
@@ -52,14 +55,18 @@ def get_saved_comments():
 
 	return comments_replied_to
 
-comments_replied_to = get_saved_comments()
-print(comments_replied_to)
-r = bot_login()
-run = True
-run_time = 0
+def awaken_bot():
+	comments_replied_to = get_saved_comments()
+	print(comments_replied_to)
+	r = bot_login()
 
-while run:
-	run_bot(r, comments_replied_to)
-	if run_time > 5:
-		print("That enough Reddit for one day.\nNow shutting off...")
-		run = False
+	results = run_bot(r, comments_replied_to)
+	return results
+
+
+@app.route("/")
+def index():
+	result = awaken_bot()
+	print("Got result back...")
+	print(result)
+	return render_template("index.html", result=result)

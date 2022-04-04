@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\static",
+    "\\templates"
   ],
-  "SelectedNode": "\\bot.py",
+  "SelectedNode": "\\openSummary.py",
   "PreviewInSolutionExplorer": false
 }

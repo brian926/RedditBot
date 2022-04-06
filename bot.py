@@ -1,9 +1,5 @@
 import praw
-import time
-import os
-import requests
 import yaml
-import openSummary
 
 def bot_login():
 	config = yaml.safe_load(open("config.yml"))
@@ -16,40 +12,19 @@ def bot_login():
 
 	return r
 
-def run_bot(r, comments_replied_to):
+def run_bot(r, subreddit):
 	print("Obtaining 25 comments...")
 	
-	subreddit = r.subreddit('news')
+	subreddit = r.subreddit(subreddit)
 	news_list = []
 
 	for submission in subreddit.hot(limit=25):
-		if submission.id not in comments_replied_to:
-
-			news_list.append(submission.title)
-			comments_replied_to.append(submission.id)
-
-		with open("comments_replied_to.txt", "a") as f:
-			f.write(submission.id + "\n")
-
-	print("Sleeping for 10 seconds...")
+		news_list.append(submission.title)
 
 	return news_list
 
-def get_saved_comments():
-	if not os.path.isfile("comments_replied_to.txt"):
-		comments_replied_to = []
-	else:
-		with open("comments_replied_to.txt", "r") as f:
-			comments_replied_to = f.read()
-			comments_replied_to = comments_replied_to.split("\n")
-			comments_replied_to = list(filter(None, comments_replied_to))
-
-	return comments_replied_to
-
-def awaken_bot():
-	comments_replied_to = get_saved_comments()
-	print(comments_replied_to)
+def awaken_bot(subreddit):
 	r = bot_login()
+	results = run_bot(r, subreddit)
 
-	results = run_bot(r, comments_replied_to)
 	return results

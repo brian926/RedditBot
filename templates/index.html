@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <head>
-    <title>Reddit News</title>
+    <title>Reddit {{ Title }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
 </head>
 
 <body>
-    <h3>Top Hottest Reddit News</h3>
+    <h3>Top Hottest Reddit {{ Title }}</h3>
     <ul>{% for item in result %}
         <li>{{ item }}</li>
         {% endfor %}

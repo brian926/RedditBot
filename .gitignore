@@ -1,5 +1,5 @@
 Skip to content
-Search or jump to…
+Search or jump toï¿½
 Pull requests
 Issues
 Marketplace
@@ -101,7 +101,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 .env
-© 2022 GitHub, Inc.
+ï¿½ 2022 GitHub, Inc.
 Terms
 Privacy
 Security
@@ -115,3 +115,5 @@ Blog
 About
 Loading complete
 config.yml
+
+*__pycache__/

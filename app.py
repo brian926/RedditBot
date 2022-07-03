@@ -23,17 +23,28 @@ def all():
 def search():
 	if request.method == 'POST':
 		subreddit = request.form['subreddit']
+		subredditSearch = request.form['subredditSearch']
 		print(subreddit)
-		if not subreddit:
-			flash('Enter a subreddit')
-		else:
-			return redirect(url_for('.test', id = subreddit))
+		if subreddit:
+			return redirect(url_for('.posts', id = subreddit))
+		elif subredditSearch:
+			return redirect(url_for('.subreddits', id = subredditSearch))
 	return render_template("search.html")
 
-@app.route('/results/<id>')
-def test(id):
+@app.route('/posts/<id>')
+def posts(id):
 	subreddit = id
-	result = bot.awaken_bot(subreddit)
+	result = bot.search_posts(subreddit)
 	print("Got result back...")
+	title = "Top Hottest Posts on {}".format(subreddit.capitalize())
 
-	return render_template("index.html", Title=subreddit.capitalize(), result=result)
+	return render_template("index.html", Title=title, result=result)
+
+@app.route('/subreddits/<id>')
+def subreddits(id):
+	subreddit = id
+	result = bot.search_subs(subreddit)
+	print("Got result back...")
+	title = "Top Subreddits that match {}".format(subreddit.capitalize())
+
+	return render_template("index.html", Title=title, result=result)

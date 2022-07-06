@@ -5,12 +5,13 @@
 </head>
 
 <body>
-    <h3>Search for Top Hottest Post on any Subreddit</h3>
-    <form action = "/" method = "POST">
-        <input type="subreddit" name="subreddit"></input>
-    </form>
-    <h3>Search for any Subreddit</h3>
-    <form action = "/" method = "POST">
-        <input type="subredditSearch" name="subredditSearch"></input>
+    <h3>Select</h3>
+    <form id="selectSearch" action = "/" method = "POST">
+        <Select id="mySelect" name="whatToSearch">
+            <option value="subredditSelect">Search for a Subreddit</option>
+            <option value="postsSelect">Hotest Posts on a Subreddit</option>
+        </Select>
+        <input type="submitSearch" name="submitSearch"></input>
+        <button type="submit">Submit</i></button>
     </form>
 </body>

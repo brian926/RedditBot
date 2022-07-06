@@ -22,13 +22,13 @@ def all():
 @app.route("/", methods=('GET', 'POST'))
 def search():
 	if request.method == 'POST':
-		subreddit = request.form['subreddit']
-		subredditSearch = request.form['subredditSearch']
-		print(subreddit)
-		if subreddit:
+		searchResults = request.form["whatToSearch"]
+		subreddit = request.form["submitSearch"]
+		
+		if searchResults == "postsSelect":
 			return redirect(url_for('.posts', id = subreddit))
-		elif subredditSearch:
-			return redirect(url_for('.subreddits', id = subredditSearch))
+		elif searchResults == "subredditSelect":
+			return redirect(url_for('.subreddits', id = subreddit))
 	return render_template("search.html")
 
 @app.route('/posts/<id>')

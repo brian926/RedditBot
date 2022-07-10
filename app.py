@@ -3,18 +3,10 @@ from flask import Flask, redirect, render_template, request, url_for
 
 app = Flask(__name__)
 
-@app.route("/news")
-def news():
-	subreddit = 'news'
-	result = bot.awaken_bot(subreddit)
-	print("Got result back...")
-
-	return render_template("index.html", Title=subreddit.capitalize(), result=result)
-
 @app.route("/all")
 def all():
 	subreddit = 'all'
-	result = bot.awaken_bot(subreddit)
+	result = bot.search_posts(subreddit)
 	print("Got result back...")
 
 	return render_template("index.html", Title=subreddit.capitalize(), result=result)
@@ -31,7 +23,7 @@ def search():
 			return redirect(url_for('.subreddits', id = subreddit))
 	return render_template("search.html")
 
-@app.route('/posts/<id>')
+@app.route('/posts/<string:id>')
 def posts(id):
 	subreddit = id
 	result = bot.search_posts(subreddit)
@@ -40,7 +32,7 @@ def posts(id):
 
 	return render_template("index.html", Title=title, result=result)
 
-@app.route('/subreddits/<id>')
+@app.route('/subreddits/<string:id>')
 def subreddits(id):
 	subreddit = id
 	result = bot.search_subs(subreddit)

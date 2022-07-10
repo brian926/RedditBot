@@ -16,11 +16,10 @@ def run_bot(r, subreddit):
 	print("Obtaining 25 comments...")
 	
 	subreddit = r.subreddit(subreddit)
-	news_list = []
-	
-	for submission in subreddit.hot(limit=25):
-		news_list.append(submission.title)
+	news_list = {}
 
+	for submission in subreddit.hot(limit=25):
+		news_list[submission.title] = "https://www.reddit.com" + submission.permalink
 	return news_list
 
 def search(r, subreddit):
@@ -35,9 +34,7 @@ def search(r, subreddit):
 	return sub_list
 
 def search_posts(subreddit):
-	
 	r = bot_login()
-	
 	results = run_bot(r, subreddit)
 	
 	return results

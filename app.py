@@ -9,7 +9,7 @@ def all():
 	result = bot.search_posts(subreddit)
 	print("Got result back...")
 
-	return render_template("postsIndex.html", Title=subreddit.capitalize(), result=result)
+	return render_template("posts.html", Title=subreddit.capitalize(), result=result)
 
 @app.route("/", methods=('GET', 'POST'))
 def search():
@@ -21,7 +21,7 @@ def search():
 			return redirect(url_for('.posts', id = subreddit))
 		elif searchResults == "subredditSelect":
 			return redirect(url_for('.subreddits', id = subreddit))
-	return render_template("search.html")
+	return render_template("index.html")
 
 @app.route('/posts/<string:id>')
 def posts(id):
@@ -30,7 +30,7 @@ def posts(id):
 	print("Got result back...")
 	title = "Top Hottest Posts on {}".format(subreddit.capitalize())
 
-	return render_template("postsIndex.html", Title=title, result=result)
+	return render_template("posts.html", Title=title, result=result)
 
 @app.route('/subreddits/<string:id>')
 def subreddits(id):
@@ -39,4 +39,4 @@ def subreddits(id):
 	print("Got result back...")
 	title = "Top Subreddits that match {}".format(subreddit.capitalize())
 
-	return render_template("subredditsIndex.html", Title=title, result=result)
+	return render_template("subreddits.html", Title=title, result=result)

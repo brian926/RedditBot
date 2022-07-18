@@ -7,9 +7,9 @@
 <body>
     <h3> {{ Title }} </h3>
     <ul>{% for item in result %}
-        <li><a href ="{{ url_for('posts', id=item ) }}">{{ item }}</a></li>
+        <li><a href ="{{ url_for('posts', id=item ) }}">{{ item }} </a> - {{ result[item] }} </li>
         {% endfor %}
     </ul>
     <br>
-    <form action="{{url_for('search')}}"><button type="submit">Home Page</i></button></form>
+    <form action="{{url_for('search')}}"><button type="submit">Home Page</button></form>
 </body>

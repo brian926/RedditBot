@@ -39,6 +39,7 @@ form {
     display: flex;
     flex-direction: column;
     width: 320px;
+    display: inline;
 }
 
 input[type="text"] {
@@ -59,4 +60,8 @@ input[type="submit"] {
 
 #mySelect {
     margin-bottom: 5px;
+}
+
+button {
+    width: 200px;
 }

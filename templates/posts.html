@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <head>
     <title>Reddit {{ Title }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='posts.css') }}" />
 </head>
 
 <body>
-    <h3> {{ Title }} </h3>
-    <ul>{% for item in result %}
-        <li><a href ="{{ result[item] }}" target="_blank">{{ item }}</a></li>
-        {% endfor %}
-    </ul>
-    <br>
-    <form action="{{url_for('search')}}"><button type="submit">Home Page</i></button></form>
+    <section>
+        <h3> {{ Title }} </h3>
+    </section>
+    <section>
+        <ul>{% for item in result %}
+            <li><a href ="{{ result[item] }}" target="_blank">{{ item }}</a></li>
+            {% endfor %}
+        </ul>
+        <br>
+    </section>
+    <section>
+        <form action="{{url_for('search')}}"><button type="submit">Home Page</button></form>
+        <form action="{{url_for('search')}}"><button type="submit">Top from this Subreddit</button></form>
+        <form action="{{url_for('subreddits', id=subreddit)}}"><button type="submit">Subreddits like {{ subreddit }}</button></form>
+    </section>
 </body>

@@ -5,13 +5,16 @@
 </head>
 
 <body>
-    <h3>Select</h3>
+    <h3>Select What to Search!</h3>
     <form id="selectSearch" action = "/" method = "POST">
         <Select id="mySelect" name="whatToSearch">
             <option value="subredditSelect">Search for a Subreddit</option>
             <option value="postsSelect">Hotest Posts on a Subreddit</option>
         </Select>
-        <input type="submitSearch" name="submitSearch"></input>
-        <button type="submit">Submit</i></button>
+        <input type="text" name="submitSearch" required>
+        <button type="submit">Submit</button>
     </form>
+    <footer>
+        <form action="{{url_for('all')}}"><button type="submit">Top Posts from All</button></form>
+    </footer>
 </body>

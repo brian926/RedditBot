@@ -9,10 +9,10 @@ def bot_login():
 		client_secret = config['client_secret'],
 		user_agent = "Comment responder")
 	print("Logged in!")
-
 	return r
 
-def run_bot(r, subreddit):
+def posts(subreddit):
+	r = bot_login()
 	print("Obtaining 25 comments...")
 	
 	subreddit = r.subreddit(subreddit)
@@ -22,25 +22,13 @@ def run_bot(r, subreddit):
 		news_list[submission.title] = "https://www.reddit.com" + submission.permalink
 	return news_list
 
-def search(r, subreddit):
+def subreddits(subreddit):
+	r = bot_login()
 	print("Obtaining 25 comments...")
 	
 	subs = r.subreddits.search_by_name(query=subreddit)
-	sub_list = []
+	sub_list = {}
 	
 	for submission in subs:
-		sub_list.append(submission.display_name)
-
+		sub_list[submission.display_name] = submission.public_description
 	return sub_list
-
-def search_posts(subreddit):
-	r = bot_login()
-	results = run_bot(r, subreddit)
-	
-	return results
-
-def search_subs(subreddit):
-	r = bot_login()
-	results = search(r, subreddit)
-
-	return results

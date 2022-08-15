@@ -9,6 +9,18 @@
         <h3> {{ Title }} </h3>
     </section>
     <section>
+        <form id="selectTime" action = "{{url_for('top', id=subreddit)}}" method = "POST">
+            <Select id="mySelect" name="whatTime">
+                <option value="all">All</option>
+                <option value="hour">Last Hour</option>
+                <option value="day">Today</option>
+                <option value="month">This Week</option>
+                <option value="year">This Year</option>
+            </Select>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+    <section>
         <ul>{% for item in result %}
             <li><a href ="{{ result[item] }}" target="_blank">{{ item }}</a></li>
             {% endfor %}

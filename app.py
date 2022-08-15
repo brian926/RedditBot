@@ -39,6 +39,19 @@ def subreddits(id):
 	title = "Top Subreddits that match {}".format(subreddit.capitalize())
 	return render_template("subreddits.html", Title=title, result=result)
 
+@app.route('/top/<string:id>', methods=('GET', 'POST'))
+def top(id):
+	subreddit = id
+	if request.method == 'POST':
+		timeResult = request.form["whatTime"]
+		result = bot.top(subreddit, timeResult)
+		print("Got result back...")
+	else:
+		result = bot.top(subreddit)
+		print("Got result back...")
+	title = "Top Posts on {}".format(subreddit.capitalize())
+	return render_template("top.html", Title=title, result=result, subreddit=subreddit)
+
 @app.errorhandler(500)
 def page_not_found(e):
     return render_template('404.html'), 404

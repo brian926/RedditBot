@@ -24,7 +24,7 @@ def posts(subreddit):
 
 def subreddits(subreddit):
 	r = bot_login()
-	print("Obtaining 25 comments...")
+	print("Obtaining subreddits like...")
 	
 	subs = r.subreddits.search_by_name(query=subreddit)
 	sub_list = {}
@@ -32,3 +32,14 @@ def subreddits(subreddit):
 	for submission in subs:
 		sub_list[submission.display_name] = submission.public_description
 	return sub_list
+
+def top(subreddit, timeResult="all"):
+	r = bot_login()
+	print("Obtaining top posts...")
+
+	posts = r.subreddit(subreddit).top(time_filter=timeResult)
+	posts_list = {}
+
+	for post in posts:
+		posts_list[post.title] = "https://www.reddit.com" + post.permalink
+	return posts_list
